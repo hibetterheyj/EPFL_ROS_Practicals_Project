@@ -1,0 +1,16 @@
+<launch>
+
+    <arg name="ns" default="/" />
+    <arg name="is_simu" default="true" />
+
+    <!-- <param name="is_simu" value="$(arg is_simu)" /> -->
+    <group ns="$(arg ns)">
+        <node name="thymio_control_ex_node" pkg="ros_basics_exercise" type="thymio_control_ex_node" output="screen"/>
+        <group if="$(arg is_simu)">
+            <node name="thymio_control_pnode" pkg="ros_basics_exercise" type="thymio_control_pnode_simu.py" output="screen"/>
+        </group>
+        <group unless="$(arg is_simu)">
+            <node name="thymio_control_pnode" pkg="ros_basics_exercise" type="thymio_control_pnode_real.py" output="screen"/>
+        </group>
+    </group>
+</launch>

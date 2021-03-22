@@ -1,0 +1,39 @@
+<launch>
+    <!-- group4 updated-->
+    <arg name="ns" default="/" />
+    <arg name="use_gazebo" default="false"/>
+
+    <group ns="$(arg ns)">
+        <node name="thymio_ctrl_node" pkg="ros_basics_control" type="thymio_ctrl_node" output="screen"/>
+    </group>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" ns="$(arg ns)" >
+        <arg name="paused" value="false"/>
+        <arg name="verbose" value="true"/>
+        <arg name="gui" value="$(arg use_gazebo)"/>
+    </include>
+
+    <include file="$(find ros_basics_models)/launch/setup_gazebo.launch" ns="$(arg ns)">
+        <arg name="with_gazebo" value="false"/>
+        <arg name="node_start_delay" value="0.0" />
+    </include>
+
+    <include file="$(find ros_basics_models)/launch/logi_c615_gazebo.launch" ns="$(arg ns)">
+        <arg name="with_gazebo" value="false"/>
+        <arg name="node_start_delay" value="0.0" />
+    </include>
+
+    <!-- <include file="$(find ros_basics_solution)/launch/thymio_gazebo.launch" ns="$(arg ns)">
+        <arg name="with_gazebo" value="false"/>
+        <arg name="node_start_delay" value="5.0" />
+    </include> -->
+    <include file="$(find ros_basics_exercise)/launch/thymio_gazebo.launch" ns="$(arg ns)">
+        <arg name="with_gazebo" value="false"/>
+        <arg name="node_start_delay" value="5.0" />
+    </include>
+
+    <include file="$(find ros_basics_vision)/launch/thymio_simu_vis.launch" ns="$(arg ns)"/>
+    <include file="$(find ros_basics_exercise)/launch/thymio_ctrl_cli.launch" ns="$(arg ns)" >
+        <arg name="is_simu" value="true"/>
+    </include>
+</launch>

@@ -1,0 +1,8 @@
+camera_dev: 1
+camera_px_width: 640
+camera_px_height: 480
+pix2mm: 1.002142315
+annotate_image: true
+use_mouse_waypoints: true
+camera_matrix: [666.82179448,   0.,         340.53770393, 0.,         665.59446379, 252.23375323, 0., 0., 1.]
+distortion_coeffs: [2.54816200e-02, -9.99858067e-01,  2.86687084e-03, -3.54082085e-04, 3.05316286e+00]

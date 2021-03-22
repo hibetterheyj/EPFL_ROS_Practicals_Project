@@ -1,0 +1,31 @@
+<launch>
+    <!-- How to use 
+    1. default (visualize rosbag in simulation scene): roslaunch ros_basics_exercise set_simu_waypoints_obstacle.launch
+    2. visualize rosbag in real-world scene: roslaunch ros_basics_exercise set_simu_waypoints_obstacle.launch is_simu:=false
+    -->
+
+    <!-- ARG -->    
+    <arg name="image_view" default="true" />
+    <arg name="plot_res" default="false"/>
+    <arg name="play_rate" default="0.8" />
+    <arg name="is_simu" default="true" />
+    <arg name="simu_bag_name" default="thymio_simulation_navigation_with_obstacle_avoidance" />
+    <arg name="real_bag_name" default="thymio_real_with_obstacle_avoidance" />
+
+    <!-- NODE -->
+    <group if="$(arg is_simu)">
+        <node pkg="rosbag" type="play" name="rosbag_play" args="-l -r $(arg play_rate) 
+        $(find ros_basics_exercise)/rosbags/simu/$(arg simu_bag_name).bag" />
+    </group>
+    <group unless="$(arg is_simu)">
+        <node pkg="rosbag" type="play" name="rosbag_play" args="-l -r $(arg play_rate) 
+        $(find ros_basics_exercise)/rosbags/real/$(arg real_bag_name).bag" />
+    </group>
+
+  <!--INCLUDE-->
+  <include file="$(find ros_basics_exercise)/launch/group4/tune_with_rqt.launch">
+    <arg name="use_dynamic_reconfigure" value="false" />
+    <arg name="use_rqt_plot" value="$(arg plot_res)" />
+    <arg name="use_rqt_image_view" value="$(arg image_view)" />
+  </include>
+</launch>

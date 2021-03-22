@@ -1,0 +1,249 @@
+<robot name="box-setup"
+    xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find ros_basics_models)/urdf/utils/materials.xacro" />
+    <xacro:include filename="$(find ros_basics_models)/urdf/utils/inertia.xacro" />
+
+    <xacro:property name="support_beam_size" value="0.025"/>
+    <xacro:property name="border_thickness" value="0.028"/>
+    <xacro:property name="setup_dim_x" value="0.59"/>
+    <xacro:property name="setup_dim_y" value="0.42"/>
+    <xacro:property name="setup_dim_z" value="0.07"/>
+    <xacro:property name="box_mass" value="2.6"/>
+
+    <link name="world"/>
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="setup"/>
+    </joint>
+    <joint name="sticker_joint" type="fixed">
+        <parent link="setup"/>
+        <child link="stickers"/>
+    </joint>
+    <!-- <joint name="pitch_joint" type="fixed">
+        <parent link="setup"/>
+        <child link="pitch"/>
+    </joint> -->
+
+    <link name="setup">
+        <visual>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${setup_dim_y + border_thickness} ${border_thickness}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${setup_dim_y + border_thickness} ${border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 -${(setup_dim_y)/2} ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="0 -${(setup_dim_y)/2} ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 ${(setup_dim_y)/2} ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="0 ${(setup_dim_y)/2} ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${setup_dim_x + border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="${(setup_dim_x)/2} 0  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${setup_dim_y + border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="${(setup_dim_x)/2} 0  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${setup_dim_y + border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="-${(setup_dim_x)/2} 0  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${setup_dim_y + border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="-${(setup_dim_x)/2} 0  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${setup_dim_y + border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness}"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="${box_mass}"/>
+            <xacro:box_inertia mass="${box_mass}" x="${setup_dim_x + border_thickness}" y="${setup_dim_y + border_thickness}" z="${border_thickness}" />
+        </inertial>
+    </link>
+
+    <!-- <link name="pitch">
+        <visual>
+            <origin xyz="0 0 ${border_thickness/2}"/>
+            <geometry>
+                <box size="${setup_dim_x} ${setup_dim_y} ${border_thickness/2}"/>
+            </geometry>
+            <material name="brown"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0"/>
+            <geometry>
+                <box size="${setup_dim_x} ${setup_dim_y} ${border_thickness/2}"/>
+            </geometry>
+        </collision>
+    </link> -->
+
+    <link name="stickers">
+        <visual>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="${setup_dim_x/2 - border_thickness} -${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin xyz="-${setup_dim_x/2 - border_thickness} ${setup_dim_y/2 - border_thickness}  ${setup_dim_z - border_thickness/4}"/>
+            <geometry>
+                <box size="${border_thickness} ${border_thickness} ${setup_dim_z + border_thickness + 0.005}"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    <gazebo reference="setup">
+        <material>Gazebo/WoodFloor</material>
+    </gazebo>
+
+    <gazebo reference="stickers">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="pitch">
+        <material>Gazebo/Grass</material>
+    </gazebo>
+
+</robot>

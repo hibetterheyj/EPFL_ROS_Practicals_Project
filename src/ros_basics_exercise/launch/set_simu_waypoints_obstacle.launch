@@ -1,0 +1,22 @@
+<launch>
+    <!-- ARG -->
+    <arg name="x" default="-0.05"/>
+    <arg name="y" default="0.00"/>
+    <arg name="z" default="0.15"/>
+    <arg name="yaw" default="1.00"/>
+    <arg name="obs_base_folder" default="$(find ros_basics_exercise)/models" />
+    <arg name="obs_name" default="ros_basics_lego_block" />
+    <arg name="obs_path" default="$(arg obs_base_folder)/$(arg obs_name).urdf" />
+    <arg name="obs_name_gazebo" default="lego_obs" />
+
+    <!-- NODE -->
+    <!-- load the waypoints -->
+    <node name="create_trajectory" pkg="ros_basics_exercise" type="path_to_follow.py" output="screen"/>
+    <!-- load the obstacle -->
+    <node name="obstacle_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -file $(arg obs_path)  -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw) -model $(arg obs_name_gazebo)"/>
+    <!--
+        you can also spawn the model using command line as follows:
+        rosrun gazebo_ros spawn_model -file $HOME/ros_basics_model/ros_basics_lego_block.urdf -urdf -x -0.05 -z 0.15  -Y -1.0 -model my_lego
+    -->
+</launch>

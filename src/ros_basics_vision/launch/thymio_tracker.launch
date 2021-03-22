@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="ns" default="/" />
+    <group ns="$(arg ns)">
+        <!-- load updated camera data -->
+        <rosparam command="load" file="$(find ros_basics_vision)/config/thymio_tracking_params_real.yaml" />
+        <node name="thymio_tracking_node" pkg="ros_basics_vision" type="thymio_tracking_node" output="screen"/>
+    </group>
+
+</launch>

@@ -1,0 +1,21 @@
+<launch>
+    <param name="setup_description" command="$(find xacro)/xacro '$(find ros_basics_models)/urdf/setup.urdf.xacro'"/>
+
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.05"/>
+    <arg name="node_start_delay" default="3.0" />
+    <arg name="with_gazebo" default="true" />
+
+    <group if="$(arg with_gazebo)">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="paused" default="false"/>
+            <arg name="verbose" default="true"/>
+        </include>
+    </group>
+
+    <arg name="ns" default="/" />
+    <group ns="$(arg ns)">
+        <node name="setup_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param setup_description -model setup -x $(arg x) -y $(arg y) -z $(arg z)" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+    </group>
+</launch>

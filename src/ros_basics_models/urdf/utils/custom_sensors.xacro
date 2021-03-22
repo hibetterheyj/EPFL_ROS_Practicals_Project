@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+    <xacro:property name="id" value="foo"/>
+    <xacro:property name="plink" value="foo_parent"/>
+
+    <xacro:property name="jointxyz" value="0 0 0"/>
+    <xacro:property name="jointrpy" value="0 0 0"/>
+    <xacro:property name="sensor_width" value="0.007" />
+    <xacro:property name="sensor_length" value="0.0025" />
+    <xacro:property name="sensor_height" value="0.004" />
+    <xacro:property name="originrpy" value="0 0 0" />
+    <xacro:property name="originxyz" value="0 0 0" />
+
+    <xacro:macro name="csensor" params="plink id mass originrpy originxyz jointxyz jointrpy">
+        <link name="sensor_${id}">
+            <visual>
+                <geometry>
+                    <box size="${sensor_length} ${sensor_width} ${sensor_height}" />
+                </geometry>
+                <material name="black" />
+                <origin rpy="${originrpy}" xyz="${originxyz}" />
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${sensor_length} ${sensor_width} ${sensor_height}" />
+                </geometry>
+                <origin rpy="${originrpy}" xyz="${originxyz}" />
+            </collision>
+            <inertial>
+                <mass value="${mass}" />
+                <origin rpy="${originrpy}" xyz="${originxyz}" />
+                <xacro:box_inertia mass="${mass}" x="${sensor_width}" y="${sensor_length}" z="${sensor_height}" />
+            </inertial>
+        </link>
+        <joint name="${plink}_sensor_${id}" type="fixed">
+            <parent link="${plink}" />
+            <child link="sensor_${id}" />
+            <origin xyz="${jointxyz}" rpy="${jointrpy}" />
+        </joint>
+    </xacro:macro>
+
+</robot>

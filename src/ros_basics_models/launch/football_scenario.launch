@@ -1,0 +1,27 @@
+<launch>
+    <param name="thymio_description" command="$(find xacro)/xacro '$(find ros_basics_models)/urdf/thymio_simple.urdf.xacro'"/>
+    <param name="setup_description" command="$(find xacro)/xacro '$(find ros_basics_models)/urdf/setup.urdf.xacro'"/>
+    <param name="ball_description" command="$(find xacro)/xacro '$(find ros_basics_models)/urdf/ball.urdf.xacro'"/>
+    <param name="camera_description" command="$(find xacro)/xacro '$(find ros_basics_models)/urdf/logi_c615.urdf.xacro'"/>
+
+    <arg name="x" default="-0.04"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.05"/>
+    <arg name="node_start_delay" default="3.0" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" default="false"/>
+        <arg name="verbose" default="true"/>
+    </include>
+
+    <arg name="ns" default="/" />
+    <group ns="$(arg ns)">
+        <node name="setup_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param setup_description -model setup -x 0 -y 0 -z 0.02 " />
+
+        <node name="thymio_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param thymio_description -model thymio -x $(arg x) -y $(arg y) -z $(arg z)" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+
+        <node name="ball_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param ball_description -model ball -x 0.09 -y $(arg y) -z $(arg z)" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+
+        <node name="camera_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param camera_description -model camera -x 0.0 -y $(arg y) -z 0.728" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "/>
+    </group>
+</launch>

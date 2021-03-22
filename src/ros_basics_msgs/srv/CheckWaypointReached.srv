@@ -1,0 +1,4 @@
+SimplePoseStamped pose
+bool verbose
+---
+bool reached

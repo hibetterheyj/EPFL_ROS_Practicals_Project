@@ -1,0 +1,36 @@
+<launch>
+    <!-- How to use 
+    1. default (use dynamic_reconfigure): roslaunch ros_basics_exercise tune_with_rqt.launch
+    2. use rqt_plot and dynamic_reconfigure: roslaunch ros_basics_exercise tune_with_rqt.launch use_rqt_plot:=true
+    3. use rqt_image_view only: roslaunch ros_basics_exercise tune_with_rqt.launch use_dynamic_reconfigure:=false use_rqt_image_view:=true
+    -->
+
+    <!-- ARG -->
+    <arg name="use_rqt_plot" default="false" />
+    <arg name="use_dynamic_reconfigure" default="true" />
+    <arg name="use_rqt_image_view" default="false" />
+
+    <!-- NODE -->
+        <!-- sudo apt install pygtgraph -->
+        <!--using rqt_plot to plot data when robot is running on the arena-->
+        <group if="$(arg use_rqt_plot)">
+            <node name="pose_w_plot"
+                    pkg="rqt_plot"
+                    type="rqt_plot"
+                    args="/robot_pose/pose/rpy/yaw" />
+            <node name="pose_xy_plot"
+                    pkg="rqt_plot"
+                    type="rqt_plot"
+                    args="/robot_pose/pose/xyz/x /robot_pose/pose/xyz/y" />
+        </group>
+
+        <!--using dynamic_reconfigure to set key parameters dynamically-->
+        <group if="$(arg use_dynamic_reconfigure)">
+            <node name="dynamic_reconfigure_gui" pkg="rqt_reconfigure" type="rqt_reconfigure" output="screen" args=""/>
+        </group>
+
+        <!--using rqt_image_view to visualize annotated images-->
+        <group if="$(arg use_rqt_image_view)">
+            <node pkg="rqt_image_view" type="rqt_image_view" name="image_view_debug" args="/robot_view/image_annot"/>
+        </group>
+</launch>

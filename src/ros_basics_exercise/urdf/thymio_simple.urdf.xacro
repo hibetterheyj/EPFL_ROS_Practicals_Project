@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="thymio">
+
+    <xacro:include filename="$(find ros_basics_models)/urdf/utils/inertia.xacro" />
+    <xacro:include filename="$(find ros_basics_models)/urdf/utils/materials.xacro" />
+    <xacro:include filename="$(find ros_basics_models)/urdf/utils/custom_sensors.xacro" />
+    <xacro:include filename="$(find ros_basics_exercise)/urdf/thymio_simple.gazebo" />
+
+    <xacro:arg name="left_wheel_mu" default="100.0"/>
+    <xacro:property name="left_wheel_mu_p" value="$(arg left_wheel_mu)"/>
+    <xacro:arg name="right_wheel_mu" default="100.0"/>
+    <xacro:property name="right_wheel_mu_p" value="$(arg right_wheel_mu)"/>
+    <xacro:property name="wheel_radius" value="0.022"/>
+    <xacro:property name="wheel_len" value="0.015"/>
+    <xacro:arg name="mass" default="0.270"/>
+    <xacro:property name="mass_p" value="$(arg mass)"/>
+    <xacro:property name="body_mass" value="${mass_p * 0.70}"/>
+    <xacro:property name="wheel_mass" value="${mass_p * 0.10}"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0.018 -0.022"/>
+            <geometry>
+                <mesh filename="package://ros_basics_exercise/urdf/Thymio.dae"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0.018 -0.022"/>
+            <geometry>
+                <mesh filename="package://ros_basics_exercise/urdf/Thymio.dae"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="${mass_p}"/>
+            <xacro:box_inertia mass="${body_mass}" x="0.114" y="0.107" z="0.043" />
+        </inertial>
+    </link>
+    <!-- Implement the caster wheel -->
+    <link name="caster_wheel">
+        <visual>
+            <origin rpy="0 1.571 0"/>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.5707 0"/>
+            <geometry>
+                <sphere radius="${wheel_radius}"/>
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>${left_wheel_mu_p}</mu>
+                        <mu2>${right_wheel_mu_p}</mu2>
+                        <slip1>1.0</slip1>
+                        <slip2>1.0</slip2>
+                    </ode>
+                </friction>
+            </surface>
+        </collision>
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:sphere_inertia mass="${wheel_mass}" r="${wheel_radius}"/>
+        </inertial>
+    </link>
+   <!-- Implement the joint for the caster wheel -->
+    <joint name="caster_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="caster_wheel"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="0 -0.038 -0.01"/>
+    </joint>
+    <!-- Implement the left wheel -->
+    <link name="left_wheel">
+        <visual>
+            <origin rpy="0 1.571 0"/>
+            <geometry>
+                <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.5707 0"/>
+            <geometry>
+                <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:cylinder_inertia mass="${wheel_mass}" h="${wheel_len}" r="${wheel_radius}"/>
+        </inertial>
+    </link>
+    <!-- Implement the joint for the left wheel -->
+    <joint name="left_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="left_wheel"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="0.051 0.024 -0.010"/>
+        <!--joint_properties damping="1.0" friction="1.0"/-->
+    </joint>
+    <!-- Implement the right wheel -->
+    <link name="right_wheel">
+        <visual>
+            <origin rpy="0 1.571 0"/>
+            <geometry>
+                <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.5707 0"/>
+            <geometry>
+                <cylinder length="${wheel_len}" radius="${wheel_radius}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="${wheel_mass}"/>
+            <xacro:cylinder_inertia mass="${wheel_mass}" h="${wheel_len}" r="${wheel_radius}"/>
+        </inertial>
+    </link>
+    <!-- Implement the joint for the right wheel -->
+    <joint name="right_wheel_joint" type="continuous">
+        <parent link="base_link"/>
+        <child link="right_wheel"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="-0.051 0.024 -0.010"/>
+        <!--joint_properties damping="1.0" friction="1.0"/-->
+    </joint>
+    <!-- Add your sensors using the macro -->
+    <xacro:csensor plink="base_link" id="0" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="0.049 -0.047 0.014" jointrpy="0 0 -0.8708"/>
+    <xacro:csensor plink="base_link" id="1" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="0.026 -0.060 0.014" jointrpy="0 0 -1.2208"/>
+    <xacro:csensor plink="base_link" id="2" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="0 -0.065 0.014" jointrpy="0 0 -1.5708"/>
+    <xacro:csensor plink="base_link" id="3" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="-0.026 -0.060 0.014" jointrpy="0 0 -1.9208"/>
+    <xacro:csensor plink="base_link" id="4" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="-0.049 -0.047 0.014" jointrpy="0 0 -2.2708"/>
+    <xacro:csensor plink="base_link" id="5" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="0.031 0.050 0.014" jointrpy="0 0 1.5708"/>
+    <xacro:csensor plink="base_link" id="6" mass="0.001" originxyz="-0.003 0 0" originrpy="0 0 0" jointxyz="-0.031 0.050 0.014" jointrpy="0 0 1.5708"/>
+
+</robot>
