@@ -23,7 +23,7 @@
     </group>
 
   <!--INCLUDE-->
-  <include file="$(find ros_basics_exercise)/launch/group4/tune_with_rqt.launch">
+  <include file="$(find ros_basics_exercise)/launch/tune_with_rqt.launch">
     <arg name="use_dynamic_reconfigure" value="false" />
     <arg name="use_rqt_plot" value="$(arg plot_res)" />
     <arg name="use_rqt_image_view" value="$(arg image_view)" />

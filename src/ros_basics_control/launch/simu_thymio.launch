@@ -1,5 +1,4 @@
 <launch>
-    <!-- group4 updated-->
     <arg name="ns" default="/" />
     <arg name="use_gazebo" default="false"/>
 

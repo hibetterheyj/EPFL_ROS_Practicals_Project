@@ -4,7 +4,7 @@
 | ------------------------------------------------------------ |
 | ![ROS-Melodic](https://img.shields.io/badge/ROS-Melodic-red.svg) ![Ubuntu-18.04](https://img.shields.io/badge/Ubuntu-18.04-blue.svg) ![ROS-Noetic](https://img.shields.io/badge/ROS-Noetic-red.svg) ![Ubuntu-20.04](https://img.shields.io/badge/Ubuntu-20.04-blue.svg) ![Thymio](https://img.shields.io/badge/Thymio-II-orange.svg) |
 
-> 2021 Spring
+> [MICRO-453 Robotics practicals](https://edu.epfl.ch/coursebook/fr/robotics-practicals-MICRO-453), 2021 Spring
 >
 > **Students: [Chuanfang Ning](https://github.com/Chuanfang-Neptune), [Jianhao Zheng](https://github.com/Jianhao-zheng), Yujie He**
 >
@@ -16,7 +16,7 @@ Thymio, PID, Way following, Obstacle avoidance, Pledge algorithm, Aruco marker, 
 
 ## :hammer: How to use?
 
-- visualize Thymio in Rviz
+- visualize Thymio in RViz
 
   ```shell
   roslaunch ros_basics_exercise thymio_simple_rviz.launch
@@ -37,20 +37,20 @@ Thymio, PID, Way following, Obstacle avoidance, Pledge algorithm, Aruco marker, 
 
 - tune with rqt tools (rqt_plot, rqt_reconfigrure, rqt_image_show)
 
-  ```
+  ```shell
   roslaunch ros_basics_control simu_thymio.launch
   roslaunch ros_basics_exercise tune_with_rqt.launch
   ```
 
 - visualize the rosbag files
 
-  ```
+  ```shell
   roslaunch ros_basics_exercise view_with_rosbag.launch
   ```
 
 - extract pose and sensor information from rosbag files
 
-  ```
+  ```shell
   roslaunch ros_basics_exercise view_with_rosbag.launch
   # open a new terminal
   rosrun ros_basics_exercise topic_reader.py
@@ -58,16 +58,16 @@ Thymio, PID, Way following, Obstacle avoidance, Pledge algorithm, Aruco marker, 
 
 - plot trajectory comparison between real and simulation (using matlab)
 
-  ```
+  ```shell
   cd results_from_bag/
-  # run plot_traj_comp.m
+  # run `plot_traj_comp.m` in MATLAB
   ```
 
   <img src="./results_from_bag/traj_thymio_simulation_navigation_with_obstacle_avoidance.png" alt="traj_thymio_simulation_navigation_with_obstacle_avoidance" style="zoom:30%;" />
 
 - connect to the real Thymio
 
-  ```
+  ```shell
   pip install thymiodirect
   roslaunch ros_basics_control real_thymio.launch
   ```
@@ -76,7 +76,7 @@ Thymio, PID, Way following, Obstacle avoidance, Pledge algorithm, Aruco marker, 
 
 > rosbags can be downloaded from [Google Drive](https://drive.google.com/drive/folders/19KUzVqVasN7F2TfLpSc37OlQIdFQcbJs?usp=sharing)
 
-For more info, you can refer to [**readme.md** in ./src/ros_basics_exercise/rosbags/ folder](./src/ros_basics_exercise/rosbags/readme.md)
+For more info, you can refer to [**readme.md** in ./src/ros_basics_exercise/rosbags/](./src/ros_basics_exercise/rosbags/readme.md) folder.
 
 ## :star: Acknowledgement
 
