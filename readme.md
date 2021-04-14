@@ -9,6 +9,8 @@
 > **Students: [Chuanfang Ning](https://github.com/Chuanfang-Neptune), [Jianhao Zheng](https://github.com/Jianhao-zheng), Yujie He**
 >
 > **Example page**: https://go.epfl.ch/ros_basics_final_2021
+>
+> :star: **2021/04: Update our project [report](./ROS_Basics_Report_21Spring.pdf) !**
 
 ## :key: Keywords
 
